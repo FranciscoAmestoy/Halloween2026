@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>En busca del Rubí Sanguíneo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --noche:#170A11;
+  --noche-alta:#22101A;
+  --tinta:#EFE0E4;
+  --tinta-baja:#B9A2AC;
+  --sangre:#8E1226;
+  --sangre-viva:#C4223A;
+  --cera:#C9A227;
+  --luna:#A8BFE0;
+}
+:root:not([data-theme="light"]){color-scheme:dark}
+:root[data-theme="dark"]{color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--noche);
+  background-image:
+    radial-gradient(120% 80% at 50% -10%, rgba(168,191,224,.13), transparent 60%),
+    radial-gradient(90% 60% at 50% 115%, rgba(142,18,38,.22), transparent 65%);
+  background-attachment:fixed;
+  color:var(--tinta);
+  font-family:"Spectral",Georgia,serif;
+  font-weight:300;
+  font-size:clamp(16px,1rem + .25vw,18px);
+  line-height:1.72;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:clamp(20px,5vw,56px) 20px 64px;
+}
+main{width:100%;max-width:38rem}
+
+/* --- tipografía --- */
+h1{
+  font-family:"Cormorant Garamond",serif;
+  font-weight:300;
+  font-size:clamp(2.6rem,10vw,4.4rem);
+  line-height:.95;
+  letter-spacing:-.01em;
+  margin:0 0 .6rem;
+}
+h1 em{font-style:italic;display:block;color:var(--sangre-viva)}
+h2{
+  font-family:"Cormorant Garamond",serif;
+  font-weight:500;
+  font-style:italic;
+  font-size:1.5rem;
+  line-height:1.2;
+  margin:0 0 1.1rem;
+  color:var(--cera);
+}
+p{margin:0 0 1.1rem;max-width:34rem}
+.guia{color:var(--tinta-baja);font-style:italic}
+
+/* --- gotas de progreso --- */
+.progreso{display:flex;gap:9px;margin:0 0 2rem;align-items:flex-end;min-height:16px}
+.gota{
+  width:9px;height:13px;
+  background:rgba(239,224,228,.16);
+  border-radius:50% 50% 50% 50%/62% 62% 38% 38%;
+  transform:rotate(180deg);
+  transition:background .5s ease;
+}
+.gota.llena{background:var(--sangre-viva);box-shadow:0 0 9px rgba(196,34,58,.7)}
+
+/* --- opciones --- */
+.opciones{display:grid;gap:14px;margin-top:2rem}
+@media(min-width:620px){.opciones{grid-template-columns:1fr 1fr}}
+.opcion{
+  font:inherit;
+  text-align:left;
+  color:var(--tinta);
+  background:var(--noche-alta);
+  border:1px solid rgba(239,224,228,.16);
+  border-left:2px solid var(--sangre);
+  padding:18px 20px;
+  cursor:pointer;
+  transition:border-color .25s,background .25s,transform .25s;
+}
+.opcion:hover,.opcion:focus-visible{
+  background:#2C1523;
+  border-color:rgba(201,162,39,.55);
+  border-left-color:var(--cera);
+}
+.opcion:focus-visible{outline:2px solid var(--luna);outline-offset:3px}
+.opcion .letra{
+  display:block;
+  font-family:"Cormorant Garamond",serif;
+  font-size:1.35rem;
+  color:var(--cera);
+  margin-bottom:.1rem;
+}
+
+/* --- botones de texto --- */
+.accion{
+  font:inherit;font-family:"Cormorant Garamond",serif;font-size:1.3rem;
+  background:none;border:none;border-bottom:1px solid var(--sangre-viva);
+  color:var(--tinta);padding:4px 2px;cursor:pointer;margin-top:1rem;
+}
+.accion:hover{color:var(--sangre-viva)}
+.accion:focus-visible{outline:2px solid var(--luna);outline-offset:4px}
+
+/* --- muerte --- */
+.muerte h2{color:var(--sangre-viva);font-size:2.1rem}
+.intentos{color:var(--tinta-baja);font-size:.85rem;letter-spacing:.06em;margin-top:2rem}
+
+/* --- luna del intro --- */
+.luna-svg{display:block;margin:0 auto 2.2rem}
+
+/* --- final --- */
+.patio{text-align:center}
+.gema{display:block;margin:0 auto;filter:drop-shadow(0 0 22px rgba(196,34,58,.75))}
+.piso{
+  perspective:340px;
+  margin-top:-8px;
+  height:132px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+}
+.proyeccion{
+  transform:rotateX(66deg) scaleY(1.5);
+  transform-origin:top center;
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(2rem,9vw,3.4rem);
+  letter-spacing:.14em;
+  color:#FF6A78;
+  text-shadow:0 0 18px rgba(196,34,58,.9),0 0 46px rgba(142,18,38,.7);
+  white-space:nowrap;
+}
+.proyeccion span{opacity:0;animation:brotar .5s forwards}
+@keyframes brotar{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){
+  .proyeccion span{animation:none;opacity:1}
+  *{transition:none!important}
+}
+</style>
+</head>
+<body>
+<main id="escena" aria-live="polite"></main>
+
+<script>
+(function(){
+  "use strict";
+
+  var _p = [62,76,60,58,69,72,63,75,198,72];
+  var _k = 372;
+  function clave(i){ return (_k >> (9-i)) & 1; }
+  function premio(){ return _p.map(function(n){return String.fromCharCode(n+7);}).join(""); }
+
+  var etapas = [
+    {
+      t:"El umbral",
+      n:["El carruaje te deja al pie de Vel d'Ombra y no espera propina. La puerta del castillo está entreabierta y adentro alguien toca el piano sin equivocarse nunca.",
+         "Una voz dice tu apellido desde la oscuridad, con la entonación exacta de quien lo leyó en una lápida."],
+      q:"¿Qué hacés?",
+      a:"Esperar en el umbral hasta que te inviten a pasar.",
+      b:"Empujar la puerta y entrar.",
+      m:["",
+         "Cruzás sin permiso y el piano se detiene en la mitad de un compás. En esta casa la cortesía no es un adorno: era el único contrato que te protegía, y lo rompiste vos."]
+    },
+    {
+      t:"La copa",
+      n:["La condesa Vetrana sirve un vino demasiado espeso para la copa que eligió.",
+         "«Por el viaje», dice, levantando la suya. No bebe."],
+      q:"Brindás. ¿Y después?",
+      a:"Tomar hasta el fondo, como manda la casa.",
+      b:"Mojarte los labios y dejar la copa llena sobre el mármol.",
+      m:["El vino baja tibio. Tibio, cuando la botella estuvo toda la noche en la cripta. Lo último que pensás es que nunca la viste llenar tu copa.",
+         ""]
+    },
+    {
+      t:"El espejo velado",
+      n:["En el salón hay un espejo grande tapado con tela negra, como en las casas de luto.",
+         "Ella habla de las rosas del invernadero y quiere, con mucha suavidad, que la mires a los ojos mientras lo hace."],
+      q:"¿Adónde mirás?",
+      a:"Corrés la tela y mirás el reflejo de la sala.",
+      b:"Le sostenés la mirada mientras habla.",
+      m:["",
+         "Sus ojos no son ojos: son dos pozos y vos te caés adentro sin gritar. Despertás tres noches después, en la cripta, y ya no tenés hambre de comida."]
+    },
+    {
+      t:"El pasillo de retratos",
+      n:["Óleos oscuros, uno cada diez pasos. Te detenés frente a uno fechado en 1602.",
+         "Es ella. El mismo lunar sobre el labio. El mismo vestido verde que tiene puesto esta noche."],
+      q:"Ella te mira mirar.",
+      a:"Señalarlo y preguntarle quién es la del cuadro.",
+      b:"Seguir caminando sin cambiar la cara.",
+      m:["«Qué observador», dice, y te apoya una mano helada en la nuca. En esta casa nadie sobrevive a ser observador dos veces.",
+         ""]
+    },
+    {
+      t:"El criado",
+      n:["Un criado viejo te agarra de la manga en el corredor: «Huí por la puerta este, a medianoche».",
+         "Lo repite. Idéntico, con la misma pausa en el mismo lugar, como un disco rayado. Tiene los ojos lechosos y no parpadea."],
+      q:"Faltan diez minutos para las doce.",
+      a:"Agradecerle y salir por la puerta este.",
+      b:"Agradecerle y no ir a ninguna parte.",
+      m:["La puerta este no da al camino. Da a una escalera, y la escalera solo baja. Alguien la mandó a decir esa frase, y no fue él.",
+         ""]
+    },
+    {
+      t:"La cripta",
+      n:["Dos ataúdes bajo la bóveda. Uno es de mármol, sellado con plomo hace siglos, con el escudo del obispado.",
+         "El otro es de roble, sin sellar, y tiene tierra fresca todavía pegada a la tapa."],
+      q:"El rubí está con quien duerme. ¿Cuál abrís?",
+      a:"El de mármol sellado.",
+      b:"El de roble con tierra.",
+      m:["Rompés el sello y adentro hay un obispo con las manos cruzadas hace cuatrocientos años. Abre los ojos. No dormía: esperaba compañía.",
+         ""]
+    },
+    {
+      t:"El guardián",
+      n:["Al pie de la escalera hay un lobo negro del tamaño de un ternero, sentado sobre las patas traseras.",
+         "No gruñe. No se mueve. Espera a ver qué clase de cosa sos."],
+      q:"Tenés el rubí en la mano.",
+      a:"Quedarte quieto, sostenerle la mirada y retroceder sin darle la espalda.",
+      b:"Correr hacia la escalera.",
+      m:["",
+         "Corriste. Para un cazador, correr no es escapar: es una respuesta, y la respuesta es «sí»."]
+    },
+    {
+      t:"La herida",
+      n:["El filo del ataúd te abrió la palma. La sangre cae sobre la piedra y algo en el castillo, muy lejos, se despierta.",
+         "La condesa se abre la muñeca con el pulgar y te la ofrece: «Cierra en un segundo». En el bolsillo tenés el paño de lino con ruda que te dio la vieja del pueblo."],
+      q:"La mano te late.",
+      a:"Beber de su muñeca.",
+      b:"Vendarte con el lino y la ruda.",
+      m:["La herida cierra antes de que termines de tragar, tal como prometió. Todo lo que su sangre cura, después le pertenece. Vos incluido.",
+         ""]
+    },
+    {
+      t:"El arroyo",
+      n:["Entre vos y el patio corre un arroyo de deshielo, ancho como una calle y frío como un cuchillo. A la izquierda hay un puente de piedra seco y cómodo.",
+         "Ella viene atrás caminando sin apuro, porque ya sabe cuál vas a elegir."],
+      q:"El agua corre fuerte.",
+      a:"Meterte en el arroyo y cruzar a pie.",
+      b:"Cruzar por el puente.",
+      m:["",
+         "La piedra no corre, y lo que no corre no la detiene. Te alcanza en el medio del puente, con toda la noche por delante."]
+    },
+    {
+      t:"La luna",
+      n:["Patio de losas. Luna llena, redonda y blanca, justo sobre el pozo.",
+         "El rubí late en tu mano como algo que todavía tiene dueño. El portón del fondo está abierto."],
+      q:"Último paso.",
+      a:"Levantar el rubí contra la luna.",
+      b:"Guardarlo en el bolsillo y correr al portón.",
+      m:["",
+         "Apenas entra en tu bolsillo el rubí se apaga y queda frío. Una piedra roja robada a oscuras es solo una piedra roja, y las piedras rojas no abren portones. Cuando levantás la vista, estás de nuevo en el salón."]
+    }
+  ];
+
+  var escena = document.getElementById("escena");
+  var paso = 0, intentos = 1;
+
+  function gotas(n){
+    var h = '<div class="progreso" aria-hidden="true">';
+    for(var i=0;i<10;i++) h += '<div class="gota'+(i<n?' llena':'')+'"></div>';
+    return h+'</div>';
+  }
+
+  function intro(){
+    escena.innerHTML =
+      '<svg class="luna-svg" width="92" height="92" viewBox="0 0 92 92" aria-hidden="true">'+
+        '<circle cx="46" cy="46" r="30" fill="#A8BFE0" opacity=".92"/>'+
+        '<circle cx="38" cy="39" r="4.5" fill="#8FA9CC" opacity=".8"/>'+
+        '<circle cx="55" cy="52" r="6.5" fill="#8FA9CC" opacity=".6"/>'+
+        '<circle cx="50" cy="33" r="2.5" fill="#8FA9CC" opacity=".7"/>'+
+        '<circle cx="46" cy="46" r="42" fill="none" stroke="#A8BFE0" stroke-width=".5" opacity=".25"/>'+
+      '</svg>'+
+      '<h1>En busca del<em>Rubí Sanguíneo</em></h1>'+
+      '<p class="guia">Diez decisiones separan el camino del castillo de la luz de la luna. Una sola equivocación te devuelve al umbral.</p>'+
+      '<p>Quien llegue al patio con el rubí en la mano va a ver una palabra escrita en las losas. Escribila en el chat: el primero que la diga se lleva la piedra.</p>'+
+      '<button class="accion" id="ir">Golpear la puerta</button>';
+    document.getElementById("ir").onclick = function(){ paso=0; etapa(); };
+  }
+
+  function etapa(){
+    var e = etapas[paso];
+    escena.innerHTML =
+      gotas(paso)+
+      '<h2>'+e.t+'</h2>'+
+      e.n.map(function(x){return '<p>'+x+'</p>';}).join("")+
+      '<p class="guia">'+e.q+'</p>'+
+      '<div class="opciones">'+
+        '<button class="opcion" data-v="0"><span class="letra">A</span>'+e.a+'</button>'+
+        '<button class="opcion" data-v="1"><span class="letra">B</span>'+e.b+'</button>'+
+      '</div>';
+    Array.prototype.forEach.call(escena.querySelectorAll(".opcion"), function(btn){
+      btn.onclick = function(){ elegir(parseInt(btn.dataset.v,10)); };
+    });
+    escena.scrollIntoView({block:"start"});
+  }
+
+  function elegir(v){
+    var e = etapas[paso];
+    if(v === clave(paso)){
+      paso++;
+      if(paso >= etapas.length) final(); else etapa();
+    } else {
+      morir(e.m[v]);
+    }
+  }
+
+  function morir(texto){
+    escena.innerHTML =
+      '<div class="muerte">'+
+      gotas(0)+
+      '<h2>Así termina</h2>'+
+      '<p>'+texto+'</p>'+
+      '<p class="guia">El castillo vuelve a acomodarse. La puerta está entreabierta otra vez y el piano no se equivocó ni una nota.</p>'+
+      '<button class="accion" id="otra">Volver al umbral</button>'+
+      '<p class="intentos">Intento '+intentos+'</p>'+
+      '</div>';
+    intentos++;
+    document.getElementById("otra").onclick = function(){ paso=0; etapa(); };
+    escena.scrollIntoView({block:"start"});
+  }
+
+  function final(){
+    var palabra = premio();
+    escena.innerHTML =
+      '<div class="patio">'+
+      gotas(10)+
+      '<h2>El patio</h2>'+
+      '<p>Levantás la piedra contra la luna. La luz la atraviesa, se ensucia de rojo y cae sobre las losas.</p>'+
+      '<svg class="gema" width="118" height="140" viewBox="0 0 118 140" aria-hidden="true">'+
+        '<path d="M59 8 L96 44 L59 116 L22 44 Z" fill="#C4223A"/>'+
+        '<path d="M59 8 L96 44 L59 116 Z" fill="#8E1226"/>'+
+        '<path d="M59 8 L22 44 L59 60 Z" fill="#E8546A" opacity=".85"/>'+
+        '<path d="M22 44 L96 44" stroke="#FF8A98" stroke-width="1.2" opacity=".7"/>'+
+      '</svg>'+
+      '<div class="piso"><div class="proyeccion" id="proy"></div></div>'+
+      '<p style="margin-top:1.4rem">Ahí está, escrita en el piso del patio por una piedra que no debería saber leer.</p>'+
+      '<p class="guia">Escribila en el chat antes que nadie.</p>'+
+      '</div>';
+    var proy = document.getElementById("proy");
+    palabra.split("").forEach(function(ch,i){
+      var s = document.createElement("span");
+      s.textContent = ch;
+      s.style.animationDelay = (0.5 + i*0.22)+"s";
+      proy.appendChild(s);
+    });
+    escena.scrollIntoView({block:"start"});
+  }
+
+  intro();
+})();
+</script>
+</body>
+</html>
